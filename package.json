@@ -1,0 +1,34 @@
+{
+  "name": "ritual",
+  "version": "0.0.1",
+  "description": "Database and API for enhancing history and clipboard processing",
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/chbrown/ritual.git"
+  },
+  "author" : "Christopher Brown <io@henrian.com>",
+  "dependencies" : {
+    "async": "*",
+    "http-enhanced": ">=0.5.2",
+    "lodash": "*",
+    "loge": "*",
+    "yargs": "*",
+    "regex-router": "*",
+    "request": "*",
+    "send": "*",
+    "sqlcmd-sqlite3": "*",
+    "streaming": ">=0.3.13",
+    "sv": "*"
+  },
+  "staticPattern": "static/lib/{file}",
+  "staticDependencies": {
+    "angular": "*",
+    "angular-ui-router": "*",
+    "lo-dash": "*",
+    "misc-js": "git://github.com/chbrown/misc-js.git",
+    "ng-storage": "*"
+  },
+  "scripts": {
+    "prestart": "node init.js"
+  }
+}
