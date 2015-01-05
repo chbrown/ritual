@@ -8,25 +8,9 @@
   },
   "author" : "Christopher Brown <io@henrian.com>",
   "dependencies" : {
-    "async": "*",
-    "http-enhanced": ">=0.5.2",
-    "lodash": "*",
     "loge": "*",
-    "yargs": "*",
-    "regex-router": "*",
-    "request": "*",
-    "send": "*",
-    "sqlcmd-sqlite3": "*",
-    "streaming": ">=0.3.13",
-    "sv": "*"
-  },
-  "staticPattern": "static/lib/{file}",
-  "staticDependencies": {
-    "angular": "*",
-    "angular-ui-router": "*",
-    "lo-dash": "*",
-    "misc-js": "git://github.com/chbrown/misc-js.git",
-    "ng-storage": "*"
+    "sqlcmd-sqlite3": "~0.1.0",
+    "streaming": "~0.3.13"
   },
   "scripts": {
     "prestart": "node init.js"
