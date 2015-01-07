@@ -1,9 +1,10 @@
 /*jslint node: true */
+var path = require('path');
 var logger = require('loge');
 var sqlcmd = require('sqlcmd-sqlite3');
 
 var db = module.exports = new sqlcmd.Connection({
-  filename: 'ritual.db',
+  filename: path.join(__dirname, 'ritual.db'),
 });
 
 // connect logger to print db log events
