@@ -14,5 +14,8 @@
   },
   "scripts": {
     "prestart": "node init.js"
+  },
+  "bin": {
+    "ritual-server": "bin/ritual-server"
   }
 }

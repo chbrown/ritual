@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+/*jslint node: true */
+var logger = require('loge');
+var server = require('../server');
+
+if (require.main === module) {
+  server.listen(parseInt(process.env.RITUAL_PORT) || 0, process.env.RITUAL_HOST);
+  logger.level = process.env.RITUAL_VERBOSE ? 'debug' : 'info';
+}
