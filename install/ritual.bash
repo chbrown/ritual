@@ -8,24 +8,21 @@ function ritual_tcp {
   # now try to open up the TCP connection, which may fail, but that output will
   # go to the logger
   exec {RITUAL}<>/dev/tcp/127.0.0.1/$RITUAL_PORT
-  # immediately record whether that worked
-  # CONNECTED=$?
-  # if we connected successfully, talk to the RITUAL server
-  if [ $? -eq 0 ]; then
-    # send the request from STDIN to the TCP socket file descriptor
-    cat - >&$RITUAL
-    # send the response to STDOUT
-    cat <&$RITUAL
-    # even though the ritual server closes the socket, bash will just leave it
-    # there hanging, so we have to close it manually.
-    exec {RITUAL}>&-
-  else
+  # if we could not connect successfully, return with an error
+  if [ $? -ne 0 ]; then
     echo 'could not establish TCP connection to ritual server' >&2
-    false
+    return 1
   fi
+  # if we connected successfully, talk to the RITUAL server
+  # send the request from STDIN to the TCP socket file descriptor
+  cat - >&$RITUAL
+  # send the response to STDOUT
+  cat <&$RITUAL
+  # even though the ritual server closes the socket, bash will just leave it
+  # there hanging, so we have to close it manually.
+  exec {RITUAL}>&-
   #exec 2>&$STDERR {STDERR}>&- # again, since we're in a subshell, we don't have
                                # to put STDERR back or close the STDERR alias
-  # return $CONNECTED
 }
 
 function ritual_add_pwd {
