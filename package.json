@@ -1,13 +1,13 @@
 {
   "name": "ritual",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Database and API for enhancing history and clipboard processing",
-  "repository" : {
-    "type" : "git",
-    "url" : "git://github.com/chbrown/ritual.git"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chbrown/ritual.git"
   },
-  "author" : "Christopher Brown <io@henrian.com>",
-  "dependencies" : {
+  "author": "Christopher Brown <io@henrian.com>",
+  "dependencies": {
     "loge": "*",
     "sqlcmd-sqlite3": "~0.1.0",
     "streaming": "~0.3.13"
