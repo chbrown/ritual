@@ -5,7 +5,7 @@ var streaming = require('streaming');
 
 var handler = require('./handler');
 
-var server = net.createServer(function(socket) {
+var server = module.exports = net.createServer(function(socket) {
   var stream = socket.pipe(new streaming.json.Parser());
   stream.on('data', function(body) {
     logger.debug('request: %j', body);
