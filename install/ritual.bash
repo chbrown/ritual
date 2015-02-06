@@ -2,27 +2,26 @@ function ritual_tcp {
   # >(logger -t ritual) generates a writable file descriptor that represents
   # syslog. we'll open up the logger and redirect all STDERR to it, _before_ the
   # TCP connection happens
-  #exec {STDERR}>&2 # since we only pipe to this function, it'll be in a
-                    # subshell, so we don't have to worry about reseting STDERR
   exec 2>>>(logger -t ritual)
   # now try to open up the TCP connection, which may fail, but that output will
   # go to the logger
-  exec {RITUAL}<>/dev/tcp/127.0.0.1/$RITUAL_PORT
+  exec 3<>/dev/tcp/127.0.0.1/$RITUAL_PORT
   # if we could not connect successfully, return with an error
   if [ $? -ne 0 ]; then
     echo 'could not establish TCP connection to ritual server' >&2
     return 1
   fi
-  # if we connected successfully, talk to the RITUAL server
-  # send the request from STDIN to the TCP socket file descriptor
-  cat - >&$RITUAL
-  # send the response to STDOUT
-  cat <&$RITUAL
-  # even though the ritual server closes the socket, bash will just leave it
-  # there hanging, so we have to close it manually.
-  exec {RITUAL}>&-
-  #exec 2>&$STDERR {STDERR}>&- # again, since we're in a subshell, we don't have
-                               # to put STDERR back or close the STDERR alias
+  # if we've connected successfully, send STDIN, line by line, to the RITUAL
+  # server via the TCP socket file descriptor
+  while read -r input; do
+    echo "$input" >&3
+    # echo "sent $input to RITUAL" >&2
+    # read and send the response to STDOUT
+    read -r -u 3 output
+    # echo "got response $output" >&2
+    echo "$output"
+  done
+  # exec {RITUAL}>&-
 }
 
 function ritual_add_pwd {
@@ -32,7 +31,20 @@ function ritual_add_pwd {
 
 function j {
   # cd to the output
-  cd $(echo '{"action":"get_directory","q":"'$@'"}' | ritual_tcp)
+  cd "$(echo '{"action":"get_directory","q":"'$@'"}' | ritual_tcp)"
 }
+
+# set default RITUAL_PORT if not already set
+[ -z "$RITUAL_PORT" ] && RITUAL_PORT=7483
+# : ${RITUAL_PORT=7483}
+
+# extras
+
+# while read -r DIRECTORY; do
+#   if [ ! -d "$DIRECTORY" ]; then
+#     echo Removing missing directory: $DIRECTORY
+#     echo '{"action":"remove_directory","path":"'$DIRECTORY'"}' | ritual_tcp >/dev/null
+#   fi
+# done < <(echo '{"action":"get_directory_list"}' | ritual_tcp | tr ':' '\n')
 
 PROMPT_COMMAND="ritual_add_pwd"
