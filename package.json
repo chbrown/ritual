@@ -8,6 +8,7 @@
   },
   "author": "Christopher Brown <io@henrian.com>",
   "dependencies": {
+    "async": "*",
     "loge": "*",
     "sqlcmd-sqlite3": "~0.1.0",
     "streaming": "~0.3.13"
