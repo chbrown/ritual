@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>github.chbrown.ritual</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/local/bin/ritual-server</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>RITUAL_PORT</key>
+      <string>7483</string>
+      <!-- launchd's PATH defaults to /usr/bin:/bin:/usr/sbin:/sbin, i.e., /etc/paths (I think) -->
+      <key>PATH</key>
+      <string>/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/ritual.log</string>
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/ritual.log</string>
+  </dict>
+</plist>
