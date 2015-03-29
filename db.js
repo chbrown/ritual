@@ -1,4 +1,3 @@
-/*jslint node: true */
 var path = require('path');
 var logger = require('loge');
 var sqlcmd = require('sqlcmd-sqlite3');

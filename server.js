@@ -1,4 +1,3 @@
-/*jslint node: true */
 var net = require('net');
 var logger = require('loge');
 var streaming = require('streaming');
