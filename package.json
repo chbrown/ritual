@@ -1,6 +1,6 @@
 {
   "name": "ritual",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Database and API for enhancing history and clipboard processing",
   "repository": {
     "type": "git",
