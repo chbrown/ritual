@@ -11,3 +11,14 @@ db.on('log', function(ev) {
   var args = [ev.format].concat(ev.args);
   logger[ev.level].apply(logger, args);
 });
+
+// initialize whenever require()'d
+var migrations_dirpath = path.join(__dirname, 'migrations');
+db.executePatches('_migrations', migrations_dirpath, function(err, filenames_applied) {
+  if (err) {
+    logger.error('Encountered error while initializing: %s', err);
+    return process.exit(1);
+  }
+
+  logger.debug('Finished initializing; applied patches: %s', filenames_applied.length ? filenames_applied.join(' ') : '(none)');
+});

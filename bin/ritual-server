@@ -2,7 +2,21 @@
 var logger = require('loge');
 var server = require('../server');
 
-if (require.main === module) {
-  server.listen(parseInt(process.env.RITUAL_PORT) || 0, process.env.RITUAL_HOST);
-  logger.level = process.env.RITUAL_VERBOSE ? 'debug' : 'info';
-}
+/**
+The server is configurable via environment variables:
+
+* `RITUAL_VERBOSE`: set this to '1' (or anything except the empty string) to
+  set the logging threshold to 'debug' (instead of 'info').
+* `RITUAL_PORT`: set this to the TCP port you want to listen on.
+  Defaults to 0, which listens on a random port.
+* `RITUAL_HOST`: set this to the IPv4 address to listen on.
+  Defaults to '127.0.0.1'.
+
+*/
+
+logger.level = process.env.RITUAL_VERBOSE ? 'debug' : 'info';
+logger.info('initializing logger with level: %s', logger.level);
+
+var port = (process.env.RITUAL_PORT !== undefined) ? parseInt(process.env.RITUAL_PORT, 10) : 0;
+var host = (process.env.RITUAL_HOST !== undefined) ? process.env.RITUAL_HOST : '127.0.0.1';
+server.listen(port, host);

@@ -5,15 +5,29 @@ Database and API for enhancing command line history, common paths and files, and
 
 ## Installation
 
-Put the following in your `~/.bashrc` or something:
+Configure bash integration by putting the following in your `~/.bashrc` or somewhere:
 
     export RITUAL_PORT=7483  # RITE on a telephone's keypad
     source ~/github/ritual/install/ritual.bash
+
+(There are two other configuration variables, `RITUAL_VERBOSE` and `RITUAL_HOST`, but the defaults for those should be fine in most cases.)
 
 Run at load:
 
     cp install/github.chbrown.ritual.plist ~/Library/LaunchAgents/github.chbrown.ritual.plist
     launchctl load ~/Library/LaunchAgents/github.chbrown.ritual.plist
+
+When running under `launchctl`, there are two useful commands:
+
+To kill the ritual server process until the next system boot:
+
+    launchctl remove github.chbrown.ritual
+
+To restart it:
+
+    launchctl stop github.chbrown.ritual
+
+Calling `stop` kills the current process, but `launchd` will immediately restart it since the `launchd` config file, `github.chbrown.ritual.plist`, has `KeepAlive` set to `true`.
 
 
 ## IPC

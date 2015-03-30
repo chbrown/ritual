@@ -4,7 +4,7 @@ var streaming = require('streaming');
 
 var handler = require('./handler');
 
-var server = module.exports = net.createServer(function(socket) {
+module.exports = net.createServer(function(socket) {
   var stream = socket.pipe(new streaming.json.Parser());
   stream.on('data', function(body) {
     logger.debug('request: %j', body);
@@ -26,15 +26,9 @@ var server = module.exports = net.createServer(function(socket) {
   // });
 })
 .on('listening', function() {
-  var address = server.address();
+  var address = this.address();
   logger.info('server listening on tcp://%s:%d', address.address, address.port);
 })
 .on('error', function(err) {
   logger.error('server error: %j', err);
 });
-
-if (require.main === module) {
-  logger.level = process.env.RITUAL_VERBOSE ? 'debug' : 'info';
-  logger.info('initializing logger with level: %s', logger.level);
-  server.listen(parseInt(process.env.RITUAL_PORT) || 0, process.env.RITUAL_HOST);
-}

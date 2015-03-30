@@ -13,9 +13,6 @@
     "sqlcmd-sqlite3": "~0.1.0",
     "streaming": "~0.3.13"
   },
-  "scripts": {
-    "prestart": "node init.js"
-  },
   "bin": {
     "ritual-server": "bin/ritual-server"
   }
