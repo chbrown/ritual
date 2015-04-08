@@ -49,6 +49,7 @@ The Ritual TCP server is obligated to return one (new)line for every line that i
 * Add weight for directories successfully fetched with `j` or, more generally, `get_directory`.
 * Add clipboard watching
 * Add shell history watching
+* Prune directories that don't exist, or maybe just skip them in case they are mounted directories that may exist again.
 * There are a lot of good ideas on the [iTerm2 shell integration page](http://iterm2.com/shell_integration.html) which seem to me like overkill for a terminal GUI, and much more suited to a third party service (like ritual).
 * Maybe use a [coproc](http://www.gnu.org/software/bash/manual/bashref.html#Coprocesses) in the shell script instead of kicking off a new subshell whenever the bash user enters a ritual command?
 
