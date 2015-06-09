@@ -3,7 +3,8 @@ var logger = require('loge');
 var sqlcmd = require('sqlcmd-sqlite3');
 
 var db = module.exports = new sqlcmd.Connection({
-  filename: path.join(__dirname, 'ritual.db'),
+  // process.env.RITUAL_DATABASE is set to the default in bin/ritual-server
+  filename: process.env.RITUAL_DATABASE,
 });
 
 // connect logger to print db log events
