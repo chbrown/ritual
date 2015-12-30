@@ -2,19 +2,30 @@
   "name": "ritual",
   "version": "0.1.0",
   "description": "Database and API for enhancing history and clipboard processing",
+  "keywords": [
+    "paths",
+    "history",
+    "autojump",
+    "daemon"
+  ],
+  "homepage": "https://github.com/chbrown/ritual",
   "repository": {
     "type": "git",
-    "url": "git://github.com/chbrown/ritual.git"
+    "url": "https://github.com/chbrown/ritual.git"
   },
-  "author": "Christopher Brown <io@henrian.com>",
+  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  "license": "MIT",
   "dependencies": {
-    "async": "*",
-    "loge": "*",
-    "sqlcmd-sqlite3": "~0.1.0",
-    "streaming": "~0.3.13"
+    "loge": "1.0.4",
+    "sql-patch": "0.1.5",
+    "sqlcmd-sqlite3": "1.0.1",
+    "streaming": "1.0.3"
+  },
+  "devDependencies": {
+    "declarations": "*",
+    "typescript": "*"
   },
   "bin": {
     "ritual-server": "bin/ritual-server"
-  },
-  "scripts": {}
+  }
 }

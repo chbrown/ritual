@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES5"
+  },
+  "files": [
+    "node_modules/declarations/node/node.d.ts",
+    "node_modules/declarations/sqlite3/sqlite3.d.ts",
+    "actions.ts",
+    "server.ts"
+  ]
+}
