@@ -1,6 +1,6 @@
 {
   "name": "ritual",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Database and API for enhancing history and clipboard processing",
   "keywords": [
     "paths",
