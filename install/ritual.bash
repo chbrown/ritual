@@ -31,7 +31,7 @@ function ritual_add_pwd {
 
 function j {
   # cd to the output
-  cd "$(printf '{"action":"get_directory","q":"%s"}'\\n "$@" | ritual_tcp)"
+  cd "$(printf '{"action":"get_directory","q":"%s"}'\\n "$*" | ritual_tcp)"
 }
 
 # set default RITUAL_PORT if not already set
