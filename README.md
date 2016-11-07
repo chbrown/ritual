@@ -7,9 +7,12 @@ Database and API for enhancing command line history, common paths and files, and
 
 The server is configured via environment variables.
 
-* `RITUAL_PORT`: set this to the TCP port you want to listen on. Defaults to 7483 ("RITE" on a telephone's keypad).
-* `RITUAL_VERBOSE`: set this to '1' (or anything except the empty string) to set the logging threshold to 'debug' (instead of 'info').
-* `RITUAL_HOST`: set this to the IPv4 address to listen on. Defaults to '127.0.0.1'.
+* `RITUAL_PORT`: set this to the TCP port you want to listen on.
+  - Defaults to 7483 ("RITE" on a telephone's keypad).
+* `RITUAL_VERBOSE`: set this to '1' (or anything except the empty string) to increase the logging threshold to 'debug'.
+  - Defaults to 'info'.
+* `RITUAL_HOST`: set this to the IPv4 address to listen on.
+  - Defaults to '127.0.0.1'.
 
 Load bash integration by putting the following in your `~/.bashrc` or somewhere:
 
@@ -77,4 +80,4 @@ Want to grab the matching directories for several queries at once?
 
 ## License
 
-Copyright 2015 Christopher Brown. [MIT Licensed](http://chbrown.github.io/licenses/MIT/).
+Copyright 2015-2016 Christopher Brown. [MIT Licensed](https://chbrown.github.io/licenses/MIT/#2015-2016).
