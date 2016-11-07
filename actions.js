@@ -1,10 +1,11 @@
+"use strict";
 /**
 Add a directory to the database.
 */
 function add_directory(db, data, callback) {
     db.Insert('directory')
         .set({ path: data.path })
-        .execute(function (error) {
+        .execute(error => {
         if (error)
             return callback(error);
         callback(null, '');
@@ -17,7 +18,7 @@ Removes _all_ directory entries matching the given path.
 function remove_directory(db, data, callback) {
     db.Delete('directory')
         .whereEqual({ path: data.path })
-        .execute(function (error) {
+        .execute(error => {
         if (error)
             return callback(error);
         callback(null, '');
@@ -31,9 +32,9 @@ TODO: Get the *best* match directory from the database, not just the most recent
 */
 function get_directory(db, data, callback) {
     db.SelectOne('directory')
-        .where('path LIKE ?', "%" + data.q.replace(/ /g, '%') + "%")
+        .where('path LIKE ?', `%${data.q.replace(/ /g, '%')}%`)
         .orderBy('entered DESC')
-        .execute(function (error, row) {
+        .execute((error, row) => {
         if (error)
             return callback(error);
         callback(null, row ? row.path : '');
@@ -46,13 +47,13 @@ directory table with the given path, where N is score rounded up to the
 nearest integer.
 */
 function add_scored_directory(db, data, callback) {
-    var inserts = 0;
+    let inserts = 0;
     (function loop() {
         if (inserts >= data.score)
             return callback(null, inserts.toString());
         db.Insert('directory')
             .set({ path: data.path })
-            .execute(function (error) {
+            .execute(error => {
             if (error)
                 return callback(error);
             inserts++;
@@ -70,10 +71,10 @@ function get_directory_list(db, data, callback) {
         .add('path', 'MAX(entered) AS last_entered')
         .groupBy('path')
         .orderBy('last_entered DESC')
-        .execute(function (error, rows) {
+        .execute((error, rows) => {
         if (error)
             return callback(error);
-        callback(null, rows.map(function (row) { return row.path; }).join(':'));
+        callback(null, rows.map(row => row.path).join(':'));
     });
 }
 exports.get_directory_list = get_directory_list;
