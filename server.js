@@ -1,13 +1,14 @@
 "use strict";
-const net_1 = require('net');
-const path_1 = require('path');
-const json_1 = require('streaming/json');
-const loge_1 = require('loge');
-const sqlcmd_sqlite3_1 = require('sqlcmd-sqlite3');
-const sql_patch_1 = require('sql-patch');
+const net_1 = require("net");
+const os_1 = require("os");
+const path_1 = require("path");
+const json_1 = require("streaming/json");
+const loge_1 = require("loge");
+const sqlcmd_sqlite3_1 = require("sqlcmd-sqlite3");
+const sql_patch_1 = require("sql-patch");
 // each export from actions has the signature:
 // function(db: sqlcmd.Connection, data: any, callback: (error: Error, line?: string) => void): void;
-const actions = require('./actions');
+const actions = require("./actions");
 function actionRouter(db, data, callback) {
     let actionFunction = actions[data.action];
     if (actionFunction === undefined) {
@@ -20,7 +21,7 @@ function main() {
     const { RITUAL_HOST, RITUAL_PORT, RITUAL_DATABASE, RITUAL_VERBOSE } = process.env;
     const host = (RITUAL_HOST !== undefined) ? RITUAL_HOST : '127.0.0.1';
     const port = (RITUAL_PORT !== undefined) ? parseInt(RITUAL_PORT, 10) : 7483;
-    const database = (RITUAL_DATABASE !== undefined) ? RITUAL_DATABASE : path_1.join(__dirname, '..', 'ritual.db');
+    const database = (RITUAL_DATABASE !== undefined) ? RITUAL_DATABASE : path_1.join(os_1.homedir(), '.local', 'ritual.db');
     const db = new sqlcmd_sqlite3_1.Connection({ filename: database });
     // connect logger to print db log events
     db.on('log', function (ev) {
