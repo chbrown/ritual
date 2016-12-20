@@ -1,4 +1,5 @@
 import {createServer} from 'net';
+import {homedir} from 'os';
 import {join} from 'path';
 import {Parser as JSONParser} from 'streaming/json';
 import {Logger, Level} from 'loge';
@@ -24,7 +25,7 @@ export function main() {
   const {RITUAL_HOST, RITUAL_PORT, RITUAL_DATABASE, RITUAL_VERBOSE} = process.env;
   const host = (RITUAL_HOST !== undefined) ? RITUAL_HOST : '127.0.0.1';
   const port = (RITUAL_PORT !== undefined) ? parseInt(RITUAL_PORT, 10) : 7483;
-  const database = (RITUAL_DATABASE !== undefined) ? RITUAL_DATABASE : join(__dirname, '..', 'ritual.db');
+  const database = (RITUAL_DATABASE !== undefined) ? RITUAL_DATABASE : join(homedir(), '.local', 'ritual.db');
 
   const db = new Connection({filename: database});
 
