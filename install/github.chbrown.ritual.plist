@@ -20,9 +20,5 @@
       <key>PATH</key>
       <string>/usr/local/bin:/usr/bin:/bin</string>
     </dict>
-    <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/ritual.log</string>
-    <key>StandardOutPath</key>
-    <string>/usr/local/var/log/ritual.log</string>
   </dict>
 </plist>
