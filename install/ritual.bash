@@ -14,24 +14,35 @@ function ritual_tcp {
   # if we've connected successfully, send STDIN, line by line, to the RITUAL
   # server via the TCP socket file descriptor
   while read -r input; do
-    printf %s\\n "$input" >&3
+    printf '%s\n' "$input" >&3
     # printf 'sent %s to RITUAL'\\n "$input" >&2
     # read and send the response to STDOUT
     read -r -u 3 output
     # printf 'got response %s'\\n "$output" >&2
-    printf %s\\n "$output"
+    printf '%s\n' "$output"
   done
   # exec {RITUAL}>&-
 }
 
 function ritual_add_pwd {
-  # discard the output (there shouldn't be any)
-  printf '{"action":"add_directory","path":"%s"}'\\n "$(pwd)" | ritual_tcp >/dev/null
+  printf '{"action":"add_directory","path":"%s"}\n' "$(pwd)" | ritual_tcp >/dev/null
+}
+function ritual_get_directory {
+  printf '{"action":"get_directory","q":"%s"}\n' "$*" | ritual_tcp
+}
+function ritual_remove_directory {
+  printf '{"action":"remove_directory","path":"%s"}\n' "$1" | ritual_tcp >/dev/null
 }
 
 function j {
-  # cd to the output
-  cd "$(printf '{"action":"get_directory","q":"%s"}'\\n "$*" | ritual_tcp)"
+  for i in {0..10}; do
+    top_dir="$(ritual_get_directory "$@")"
+    # cd to the output and return if successful
+    cd "$top_dir" && return 0
+    # if cd failed, remove the directory and try again
+    ritual_remove_directory "$top_dir"
+  done
+  return 1
 }
 
 # set default RITUAL_PORT if not already set
