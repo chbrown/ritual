@@ -33,6 +33,9 @@ function ritual_get_directory {
 function ritual_remove_directory {
   printf '{"action":"remove_directory","path":"%s"}\n' "$1" | ritual_tcp >/dev/null
 }
+function ritual_replace {
+  printf '{"action":"replace","from":"%s","to":"%s"}\n' "$1" "$2" | ritual_tcp
+}
 
 function j {
   for i in {0..10}; do

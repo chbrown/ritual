@@ -94,3 +94,23 @@ export function get_directory_list(db: Connection,
     callback(null, rows.map(row => row.path).join(':'));
   });
 }
+
+/**
+Replace the value of `from` with the value of `to` in all paths.
+*/
+export function replace(db: Connection,
+                        data: {from: string, to: string},
+                        callback: (error: Error, changes?: string) => void) {
+  db.Update('directory')
+  .set('path = REPLACE(path, ?, ?)', data.from, data.to)
+  .where('path LIKE ?', `%${data.from}%`)
+  .execute(error => {
+    if (error) return callback(error);
+
+    db.executeSQL('SELECT changes() AS changes', [], (error, rows) => {
+      if (error) return callback(error);
+
+      callback(null, rows[0].changes);
+    });
+  });
+}

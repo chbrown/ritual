@@ -78,3 +78,21 @@ function get_directory_list(db, data, callback) {
     });
 }
 exports.get_directory_list = get_directory_list;
+/**
+Replace the value of `from` with the value of `to` in all paths.
+*/
+function replace(db, data, callback) {
+    db.Update('directory')
+        .set('path = REPLACE(path, ?, ?)', data.from, data.to)
+        .where('path LIKE ?', `%${data.from}%`)
+        .execute(error => {
+        if (error)
+            return callback(error);
+        db.executeSQL('SELECT changes() AS changes', [], (error, rows) => {
+            if (error)
+                return callback(error);
+            callback(null, rows[0].changes);
+        });
+    });
+}
+exports.replace = replace;

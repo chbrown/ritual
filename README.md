@@ -69,6 +69,10 @@ Want to grab the matching directories for several queries at once?
       jq -c '{action: "get_directory", q: .q}' |\
       ritual_tcp
 
+Replace a substring with another substring, e.g., after moving a common directory:
+
+    ritual_replace "/github/business-" "/business/"
+
 
 ## Autojump import
 
@@ -80,4 +84,4 @@ Want to grab the matching directories for several queries at once?
 
 ## License
 
-Copyright 2015-2016 Christopher Brown. [MIT Licensed](https://chbrown.github.io/licenses/MIT/#2015-2016).
+Copyright 2015-2017 Christopher Brown. [MIT Licensed](https://chbrown.github.io/licenses/MIT/#2015-2017).
