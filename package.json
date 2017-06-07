@@ -22,8 +22,8 @@
     "streaming": "1.0.3"
   },
   "devDependencies": {
-    "declarations": "*",
-    "typescript": "*"
+    "declarations": "0.1.16",
+    "typescript": "2.1.5"
   },
   "bin": {
     "ritual-server": "bin/ritual-server"
