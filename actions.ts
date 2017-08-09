@@ -35,6 +35,16 @@ export function remove_directory(db: Connection,
   });
 }
 
+function prepareSearchPattern(q: string) {
+  const query = '%' + q.replace(/ /g, '%');
+  // special syntax: if query ends with a $, do not wildcard match on the end
+  if (/\$$/.test(query)) {
+    return query.replace(/\$$/, '');
+  }
+  else {
+    return query + '%';
+  }
+}
 
 /**
 For now, get the latest directory path that matches the given query.
@@ -45,7 +55,7 @@ export function get_directory(db: Connection,
                               data: {q: string},
                               callback: (error: Error, directory?: string) => void) {
   db.SelectOne('directory')
-  .where('path LIKE ?', `%${data.q.replace(/ /g, '%')}%`)
+  .where('path LIKE ?', prepareSearchPattern(data.q))
   .orderBy('entered DESC')
   .execute((error, row) => {
     if (error) return callback(error);
