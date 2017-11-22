@@ -38,8 +38,11 @@ function ritual_replace {
 }
 
 function j {
+  # try up to 10 results before giving up
   for i in {0..10}; do
     top_dir="$(ritual_get_directory "$@")"
+    # exit with an error if ritual returned nothing
+    [[ -z "$top_dir" ]] && return 1
     # cd to the output and return if successful
     cd "$top_dir" && return 0
     # if cd failed, remove the directory and try again
