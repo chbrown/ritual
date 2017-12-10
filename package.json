@@ -18,12 +18,13 @@
   "dependencies": {
     "loge": "1.0.4",
     "sql-patch": "0.1.5",
-    "sqlcmd-sqlite3": "1.0.1",
+    "sqlcmd-sqlite3": "3.0.0",
     "streaming": "1.0.3"
   },
   "devDependencies": {
-    "declarations": "0.1.16",
-    "typescript": "2.1.5"
+    "@types/node": "latest",
+    "@types/sqlite3": "3.1.1",
+    "typescript": "^2.6.2"
   },
   "bin": {
     "ritual-server": "bin/ritual-server"
