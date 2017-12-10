@@ -27,5 +27,9 @@
   },
   "bin": {
     "ritual-server": "bin/ritual-server"
+  },
+  "scripts": {
+    "prepare": "tsc",
+    "clean": "tsc -m commonjs -d --listEmittedFiles | sed 's/^TSFILE: //' | xargs rm -v"
   }
 }
