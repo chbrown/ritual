@@ -40,7 +40,7 @@ export function main() {
 
   const server = createServer(socket => {
     socket.pipe(new JSONParser())
-    .on('data', (body) => {
+    .on('data', (body: {action: string}) => {
       logger.debug('request: %j', body);
       actionRouter(db, body, (err, result) => {
         if (err) {
