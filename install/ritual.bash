@@ -1,4 +1,4 @@
-function ritual_tcp {
+ritual_tcp() {
   # >(logger -t ritual) generates a writable file descriptor that represents
   # syslog. we'll open up the logger and redirect all STDERR to it, _before_ the
   # TCP connection happens
@@ -24,20 +24,20 @@ function ritual_tcp {
   # exec {RITUAL}>&-
 }
 
-function ritual_add_pwd {
+ritual_add_pwd() {
   printf '{"action":"add_directory","path":"%s"}\n' "$(pwd)" | ritual_tcp >/dev/null
 }
-function ritual_get_directory {
+ritual_get_directory() {
   printf '{"action":"get_directory","q":"%s"}\n' "$*" | ritual_tcp
 }
-function ritual_remove_directory {
+ritual_remove_directory() {
   printf '{"action":"remove_directory","path":"%s"}\n' "$1" | ritual_tcp >/dev/null
 }
-function ritual_replace {
+ritual_replace() {
   printf '{"action":"replace","from":"%s","to":"%s"}\n' "$1" "$2" | ritual_tcp
 }
 
-function j {
+j() {
   # try up to 10 results before giving up
   for i in {0..10}; do
     top_dir="$(ritual_get_directory "$@")"
