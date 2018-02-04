@@ -1,5 +1,7 @@
 # ritual
 
+[![npm package version](https://badge.fury.io/js/ritual.svg)](https://www.npmjs.com/package/ritual)
+
 Database and API for enhancing command line history, common paths and files, and clipboard handling.
 
 
