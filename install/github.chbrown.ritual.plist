@@ -6,7 +6,8 @@
     <string>github.chbrown.ritual</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/bin/ritual-server</string>
+      <string>/usr/local/bin/node</string>
+      <string>/usr/local/lib/node_modules/ritual/server.js</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
@@ -16,9 +17,6 @@
     <dict>
       <key>RITUAL_PORT</key>
       <string>7483</string>
-      <!-- launchd's PATH defaults to /usr/bin:/bin:/usr/sbin:/sbin, i.e., /etc/paths (I think) -->
-      <key>PATH</key>
-      <string>/usr/local/bin:/usr/bin:/bin</string>
     </dict>
   </dict>
 </plist>

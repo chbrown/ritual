@@ -86,4 +86,6 @@ export function main() {
 }
 
 // this adds support for the standard `npm start` script
-if (require.main === module) main();
+if (require.main === module) {
+  main();
+}
