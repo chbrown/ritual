@@ -1,14 +1,15 @@
+#!/usr/bin/env bash
+
 ritual_tcp() {
   # >(logger -t ritual) generates a writable file descriptor that represents
   # syslog. we'll open up the logger and redirect all STDERR to it, _before_ the
   # TCP connection happens
   exec 2>>>(logger -t ritual)
-  # now try to open up the TCP connection, which may fail, but that output will
-  # go to the logger
-  exec 3<>/dev/tcp/127.0.0.1/$RITUAL_PORT
-  # if we could not connect successfully, return with an error
-  if [ $? -ne 0 ]; then
-    printf 'could not establish TCP connection to ritual server'\\n >&2
+  # now try to open up the TCP connection.
+  # this may fail, but that output will go to the logger
+  if ! exec 3<>"/dev/tcp/127.0.0.1/$RITUAL_PORT"; then
+    # if we could not connect successfully, return with an error
+    printf 'could not establish TCP connection to ritual server\n' >&2
     return 1
   fi
   # if we've connected successfully, send STDIN, line by line, to the RITUAL
@@ -39,7 +40,7 @@ ritual_replace() {
 
 j() {
   # try up to 10 results before giving up
-  for i in {0..10}; do
+  for _ in {0..10}; do
     top_dir="$(ritual_get_directory "$@")"
     # exit with an error if ritual returned nothing
     [[ -z "$top_dir" ]] && return 1
