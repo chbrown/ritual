@@ -16,10 +16,10 @@
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "license": "MIT",
   "dependencies": {
-    "loge": "1.0.4",
+    "loge": "1.0.5",
     "sql-patch": "1.1.0",
     "sqlcmd-sqlite3": "^4.0.1",
-    "streaming": "1.0.3"
+    "streaming": "1.1.0"
   },
   "devDependencies": {
     "@types/node": "^9.6.7",
