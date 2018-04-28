@@ -9,11 +9,8 @@
     "daemon"
   ],
   "homepage": "https://github.com/chbrown/ritual",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chbrown/ritual.git"
-  },
-  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  "repository": "git://github.com/chbrown/ritual.git",
+  "author": "Christopher Brown <io@henrian.com>",
   "license": "MIT",
   "dependencies": {
     "loge": "1.0.5",
