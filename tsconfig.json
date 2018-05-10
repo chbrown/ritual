@@ -2,9 +2,5 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES6"
-  },
-  "files": [
-    "actions.ts",
-    "server.ts"
-  ]
+  }
 }
