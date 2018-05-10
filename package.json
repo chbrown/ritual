@@ -15,6 +15,7 @@
   "dependencies": {
     "loge": "1.0.5",
     "sql-patch": "1.2.1",
+    "sqlcmd": "3.0.3",
     "sqlcmd-sqlite3": "^4.0.1",
     "streaming": "1.1.0"
   },

@@ -3,6 +3,7 @@ import {homedir} from 'os';
 import {join} from 'path';
 import {Parser as JSONParser} from 'streaming/json';
 import {Logger, Level} from 'loge';
+import {LogEvent} from 'sqlcmd';
 import {Connection} from 'sqlcmd-sqlite3';
 import {executePatches} from 'sql-patch';
 
@@ -13,7 +14,7 @@ import * as actions from './actions';
 function actionRouter(db: Connection,
                       data: {action: string},
                       callback: (error: Error, line?: string) => void) {
-  let actionFunction: actions.Action<any> = actions[data.action];
+  const actionFunction: actions.Action<any> = actions[data.action];
   if (actionFunction === undefined) {
     return callback(new Error(`no handler found for action: ${data.action}`));
   }
@@ -29,14 +30,14 @@ export function main() {
 
   const db = new Connection({filename: database});
 
-  // connect logger to print db log events
-  db.on('log', function(ev) {
-    let args = [ev.format].concat(ev.args);
-    logger[ev.level].apply(logger, args);
-  });
-
   const logger = new Logger(process.stderr, RITUAL_VERBOSE ? Level.debug : Level.info);
   logger.info(`initializing logger with level: ${Level[logger.level]}`);
+
+  // connect logger to print db log events
+  db.on('log', (ev: LogEvent) => {
+    const args = [ev.format].concat(ev.args);
+    logger[ev.level].apply(logger, args);
+  });
 
   const server = createServer(socket => {
     socket.pipe(new JSONParser())
