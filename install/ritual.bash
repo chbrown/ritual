@@ -31,6 +31,9 @@ ritual_add_pwd() {
 ritual_get_directory() {
   printf '{"action":"get_directory","q":"%s"}\n' "$*" | ritual_tcp
 }
+ritual_get_directory_list() {
+  printf '{"action":"get_directory_list","q":"%s"}\n' "$*" | ritual_tcp
+}
 ritual_remove_directory() {
   printf '{"action":"remove_directory","path":"%s"}\n' "$1" | ritual_tcp >/dev/null
 }
