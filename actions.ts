@@ -1,9 +1,12 @@
 import {Connection} from 'sqlcmd-sqlite3';
 // Connection is only used for its type; it is not instantiated
 
-export interface Action<T> {
-  (db: Connection, data: T, callback: (error: Error, line?: string) => void): void;
+export interface DirectoryRow {
+  path: string;
+  entered: number;
 }
+
+export type Action<T> = (db: Connection, data: T, callback: (error: Error, line?: string) => void) => void;
 
 /**
 Add a directory to the database.
@@ -57,7 +60,7 @@ export function get_directory(db: Connection,
   db.SelectOne('directory')
   .where('path LIKE ?', prepareSearchPattern(data.q))
   .orderBy('entered DESC')
-  .execute((error, row) => {
+  .execute((error, row: DirectoryRow) => {
     if (error) return callback(error);
 
     callback(null, row ? row.path : '');
@@ -74,7 +77,9 @@ export function add_scored_directory(db: Connection,
                                      callback: (error: Error, number_added?: string) => void) {
   let inserts = 0;
   (function loop() {
-    if (inserts >= data.score) return callback(null, inserts.toString());
+    if (inserts >= data.score) {
+      return callback(null, inserts.toString());
+    }
 
     db.Insert('directory')
     .set({path: data.path})
@@ -84,7 +89,7 @@ export function add_scored_directory(db: Connection,
       inserts++;
       setImmediate(loop);
     });
-  });
+  })();
 }
 
 /**
