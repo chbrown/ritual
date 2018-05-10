@@ -72,7 +72,7 @@ export function main() {
   const migrations_dirpath = join(__dirname, 'migrations');
   // TODO: figure out why TypeScript doesn't think sqlcmd-sqlite3.Connection can
   // be assigned to sqlcmd.Connection.
-  executePatches(<any>db, '_migrations', migrations_dirpath, (err, filenames_applied) => {
+  executePatches(db, '_migrations', migrations_dirpath, (err, filenames_applied) => {
     if (err) {
       logger.error('Encountered error while initializing: %s', err);
       return process.exit(1);
