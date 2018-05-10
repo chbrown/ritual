@@ -55,12 +55,14 @@ For now, get the latest directory path that matches the given query.
 TODO: Get the *best* match directory from the database, not just the most recent one.
 */
 export function get_directory(db: Connection,
-                              data: {q: string},
+                              data: {q?: string},
                               callback: (error: Error, directory?: string) => void) {
-  db.SelectOne('directory')
-  .where('path LIKE ?', prepareSearchPattern(data.q))
+  let query = db.SelectOne('directory')
   .orderBy('entered DESC')
-  .execute((error, row: DirectoryRow) => {
+  if (data.q) {
+    query = query.where('path LIKE ?', prepareSearchPattern(data.q))
+  }
+  query.execute((error, row: DirectoryRow) => {
     if (error) return callback(error);
 
     callback(null, row ? row.path : '');
@@ -97,13 +99,16 @@ List out all directories, separated by the ':' character, with the most recent
 first. Hopefully you don't have any directories containing a newline.
 */
 export function get_directory_list(db: Connection,
-                                   data: {},
+                                   data: {q?: string},
                                    callback: (error: Error, directory_list?: string) => void) {
-  db.Select('directory')
+  let query = db.Select('directory')
   .add('path', 'MAX(entered) AS last_entered')
   .groupBy('path')
   .orderBy('last_entered DESC')
-  .execute((error, rows) => {
+  if (data.q) {
+    query = query.where('path LIKE ?', prepareSearchPattern(data.q))
+  }
+  query.execute((error, rows: {path: string, last_entered: number}[]) => {
     if (error) return callback(error);
 
     callback(null, rows.map(row => row.path).join(':'));
