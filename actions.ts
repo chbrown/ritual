@@ -39,13 +39,13 @@ export function remove_directory(db: Connection,
 }
 
 function prepareSearchPattern(q: string) {
-  const query = '%' + q.replace(/ /g, '%');
+  const query = `%${q.replace(/ /g, '%')}`;
   // special syntax: if query ends with a $, do not wildcard match on the end
   if (/\$$/.test(query)) {
     return query.replace(/\$$/, '');
   }
   else {
-    return query + '%';
+    return `${query}%`;
   }
 }
 
@@ -127,8 +127,8 @@ export function replace(db: Connection,
   .execute(error => {
     if (error) return callback(error);
 
-    db.executeSQL('SELECT changes() AS changes', [], (error, rows) => {
-      if (error) return callback(error);
+    db.executeSQL('SELECT changes() AS changes', [], (selectError, rows) => {
+      if (selectError) return callback(selectError);
 
       callback(null, rows[0].changes);
     });

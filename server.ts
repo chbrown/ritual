@@ -56,7 +56,7 @@ export function main() {
         }
         // logger.debug('Handler result: %j', result);
         if (socket.writable) {
-          socket.write(result + '\n');
+          socket.write(`${result}\n`);
         }
       });
     })
