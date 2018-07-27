@@ -15,13 +15,13 @@
   "dependencies": {
     "loge": "1.0.5",
     "sql-patch": "1.2.2",
-    "sqlcmd": "^3.0.3",
-    "sqlcmd-sqlite3": "^4.0.1",
+    "sqlcmd": "3.0.3",
+    "sqlcmd-sqlite3": "4.0.1",
     "streaming": "1.1.0"
   },
   "devDependencies": {
-    "@types/node": "9.6.7",
-    "typescript": "^2.8.3"
+    "@types/node": "10.5.3",
+    "typescript": "2.9.2"
   },
   "scripts": {
     "prepare": "tsc",
