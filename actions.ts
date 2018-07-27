@@ -1,12 +1,12 @@
-import {Connection} from 'sqlcmd-sqlite3';
-// Connection is only used for its type; it is not instantiated
+import {Connection} from 'sqlcmd-sqlite3'
+// Connection is only used for its type -- it is not instantiated
 
 export interface DirectoryRow {
-  path: string;
-  entered: number;
+  path: string
+  entered: number
 }
 
-export type Action<T> = (db: Connection, data: T, callback: (error: Error, line?: string) => void) => void;
+export type Action<T> = (db: Connection, data: T, callback: (error: Error, line?: string) => void) => void
 
 /**
 Add a directory to the database.
@@ -17,10 +17,10 @@ export function add_directory(db: Connection,
   db.Insert('directory')
   .set({path: data.path})
   .execute(error => {
-    if (error) return callback(error);
+    if (error) return callback(error)
 
-    callback(null, '');
-  });
+    callback(null, '')
+  })
 }
 
 /**
@@ -32,20 +32,20 @@ export function remove_directory(db: Connection,
   db.Delete('directory')
   .whereEqual({path: data.path})
   .execute(error => {
-    if (error) return callback(error);
+    if (error) return callback(error)
 
-    callback(null, '');
-  });
+    callback(null, '')
+  })
 }
 
 function prepareSearchPattern(q: string) {
-  const query = `%${q.replace(/ /g, '%')}`;
+  const query = `%${q.replace(/ /g, '%')}`
   // special syntax: if query ends with a $, do not wildcard match on the end
   if (/\$$/.test(query)) {
-    return query.replace(/\$$/, '');
+    return query.replace(/\$$/, '')
   }
   else {
-    return `${query}%`;
+    return `${query}%`
   }
 }
 
@@ -63,10 +63,10 @@ export function get_directory(db: Connection,
     query = query.where('path LIKE ?', prepareSearchPattern(data.q))
   }
   query.execute((error, row: DirectoryRow) => {
-    if (error) return callback(error);
+    if (error) return callback(error)
 
-    callback(null, row ? row.path : '');
-  });
+    callback(null, row ? row.path : '')
+  })
 }
 
 /**
@@ -80,18 +80,18 @@ export function add_scored_directory(db: Connection,
   let inserts = 0;
   (function loop() {
     if (inserts >= data.score) {
-      return callback(null, inserts.toString());
+      return callback(null, inserts.toString())
     }
 
     db.Insert('directory')
     .set({path: data.path})
     .execute(error => {
-      if (error) return callback(error);
+      if (error) return callback(error)
 
-      inserts++;
-      setImmediate(loop);
-    });
-  })();
+      inserts++
+      setImmediate(loop)
+    })
+  })()
 }
 
 /**
@@ -109,10 +109,10 @@ export function get_directory_list(db: Connection,
     query = query.where('path LIKE ?', prepareSearchPattern(data.q))
   }
   query.execute((error, rows: {path: string, last_entered: number}[]) => {
-    if (error) return callback(error);
+    if (error) return callback(error)
 
-    callback(null, rows.map(row => row.path).join(':'));
-  });
+    callback(null, rows.map(row => row.path).join(':'))
+  })
 }
 
 /**
@@ -125,12 +125,12 @@ export function replace(db: Connection,
   .set('path = REPLACE(path, ?, ?)', data.from, data.to)
   .where('path LIKE ?', `%${data.from}%`)
   .execute(error => {
-    if (error) return callback(error);
+    if (error) return callback(error)
 
     db.executeSQL('SELECT changes() AS changes', [], (selectError, rows) => {
-      if (selectError) return callback(selectError);
+      if (selectError) return callback(selectError)
 
-      callback(null, rows[0].changes);
-    });
-  });
+      callback(null, rows[0].changes)
+    })
+  })
 }
