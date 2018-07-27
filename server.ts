@@ -1,4 +1,4 @@
-import {createServer} from 'net';
+import {createServer, AddressInfo} from 'net';
 import {homedir} from 'os';
 import {join} from 'path';
 import {Parser as JSONParser} from 'streaming/json';
@@ -19,6 +19,13 @@ function actionRouter(db: Connection,
     return callback(new Error(`no handler found for action: ${data.action}`));
   }
   actionFunction(db, data, callback);
+}
+
+function formatServerAddress(address: string | AddressInfo): string {
+  if (typeof address == 'string') {
+    return address;
+  }
+  return `${address.address}:${address.port}`;
 }
 
 export function main() {
@@ -62,8 +69,7 @@ export function main() {
   });
   server // hack to deal with EventEmitter#on returning `EventEmitter` instead of `this`
   .on('listening', () => {
-    const {address, port} = server.address();
-    logger.info(`server listening on tcp://${address}:${port}`);
+    logger.info(`server listening on tcp://${formatServerAddress(server.address())}`);
   })
   .on('error', err => {
     logger.error('server error: %j', err);
